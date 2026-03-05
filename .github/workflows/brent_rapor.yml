@@ -1,0 +1,19 @@
+name: Brent Petrol Rapor
+on:
+  schedule:
+    - cron: '0 4 * * *'
+    - cron: '0 17 * * *'
+  workflow_dispatch:
+jobs:
+  rapor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install requests pytz
+      - run: python brent_rapor_sistemi.py --test
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
